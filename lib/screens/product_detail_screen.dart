@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../models/cart.dart'; 
-import '../models/cart_item.dart'; 
+import '../models/cart.dart';
+import '../models/cart_item.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final String productName;
-  final String productImage;
+  final String productImage; // <-- This is a network URL from product.imageUrl
   final double productPrice;
   final String productDescription;
 
@@ -37,7 +37,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     }
   }
 
-  
   void _addToCart() {
     Cart.addItem(
       CartItem(
@@ -50,7 +49,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('${widget.productName} added to cart!'),
-        duration: Duration(seconds: 2),
+        duration: const Duration(seconds: 2),
       ),
     );
   }
@@ -60,34 +59,55 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.productName),
-        backgroundColor: Theme.of(context).appBarTheme.backgroundColor, 
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
       ),
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor, 
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Use Image.network to load from a URL
             Center(
-              child: Image.asset(
+              child: Image.network(
                 widget.productImage,
-                width: double.infinity, 
+                width: double.infinity,
                 height: 250,
                 fit: BoxFit.cover,
+                // Provide error and loading handling:
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    color: Colors.grey,
+                    height: 250,
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    child: const Icon(Icons.error, color: Colors.red, size: 40),
+                  );
+                },
+                loadingBuilder: (context, child, progress) {
+                  if (progress == null) return child;
+                  return Container(
+                    height: 250,
+                    alignment: Alignment.center,
+                    child: const CircularProgressIndicator(),
+                  );
+                },
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-            
+            // Product Name
             Text(
               widget.productName,
               style: GoogleFonts.roboto(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: Theme.of(context).textTheme.bodyLarge?.color, 
+                color: Theme.of(context).textTheme.bodyLarge?.color,
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
+
+            // Product Price
             Text(
               "Rs ${widget.productPrice.toStringAsFixed(0)}",
               style: GoogleFonts.roboto(
@@ -96,28 +116,31 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 color: Colors.green,
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-            
+            // Quantity Adjust
             Row(
               children: [
                 IconButton(
                   onPressed: _decrementQuantity,
-                  icon: Icon(Icons.remove_circle_outline, color: Colors.green),
+                  icon: const Icon(Icons.remove_circle_outline, color: Colors.green),
                 ),
                 Text(
                   '$_quantity',
-                  style: TextStyle(fontSize: 18, color: Theme.of(context).textTheme.bodyLarge?.color),
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Theme.of(context).textTheme.bodyLarge?.color,
+                  ),
                 ),
                 IconButton(
                   onPressed: _incrementQuantity,
-                  icon: Icon(Icons.add_circle_outline, color: Colors.green),
+                  icon: const Icon(Icons.add_circle_outline, color: Colors.green),
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-            
+            // Product Details
             ExpansionTile(
               title: Text(
                 'Product Details',
@@ -137,9 +160,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
 
-            
+            // Fake Reviews
             Row(
               children: [
                 Text(
@@ -150,23 +173,23 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     color: Theme.of(context).textTheme.bodyLarge?.color,
                   ),
                 ),
-                SizedBox(width: 10),
-                Icon(Icons.star, color: Colors.orange),
-                Icon(Icons.star, color: Colors.orange),
-                Icon(Icons.star, color: Colors.orange),
-                Icon(Icons.star, color: Colors.orange),
-                Icon(Icons.star_half, color: Colors.orange),
+                const SizedBox(width: 10),
+                const Icon(Icons.star, color: Colors.orange),
+                const Icon(Icons.star, color: Colors.orange),
+                const Icon(Icons.star, color: Colors.orange),
+                const Icon(Icons.star, color: Colors.orange),
+                const Icon(Icons.star_half, color: Colors.orange),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-            
+            // Add to Cart Button
             Center(
               child: ElevatedButton(
-                onPressed: _addToCart, 
+                onPressed: _addToCart,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,
-                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                  padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),

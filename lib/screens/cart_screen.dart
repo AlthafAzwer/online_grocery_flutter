@@ -12,10 +12,10 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor, 
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         title: Text("My Cart"),
-        backgroundColor: Theme.of(context).appBarTheme.backgroundColor, 
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -30,13 +30,6 @@ class _CartScreenState extends State<CartScreen> {
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: Row(
                       children: [
-                        Image.asset(
-                          item.imageUrl,
-                          width: 60,
-                          height: 60,
-                          fit: BoxFit.cover,
-                        ),
-                        SizedBox(width: 16),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,13 +39,13 @@ class _CartScreenState extends State<CartScreen> {
                                 style: GoogleFonts.roboto(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
-                                  color: Theme.of(context).textTheme.bodyLarge?.color, 
+                                  color: Theme.of(context).textTheme.bodyLarge?.color,
                                 ),
                               ),
                               Text(
                                 "Rs ${item.price}",
                                 style: TextStyle(
-                                  color: Theme.of(context).textTheme.bodyLarge?.color, 
+                                  color: Theme.of(context).textTheme.bodyLarge?.color,
                                 ),
                               ),
                             ],
@@ -74,7 +67,10 @@ class _CartScreenState extends State<CartScreen> {
                             ),
                             Text(
                               '${item.quantity}',
-                              style: GoogleFonts.roboto(fontSize: 16, color: Theme.of(context).textTheme.bodyLarge?.color),
+                              style: GoogleFonts.roboto(
+                                fontSize: 16,
+                                color: Theme.of(context).textTheme.bodyLarge?.color,
+                              ),
                             ),
                             IconButton(
                               onPressed: () {
@@ -109,12 +105,12 @@ class _CartScreenState extends State<CartScreen> {
                   style: GoogleFonts.roboto(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Theme.of(context).textTheme.bodyLarge?.color, 
+                    color: Theme.of(context).textTheme.bodyLarge?.color,
                   ),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    
+                    // Navigate to Checkout
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green,

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'screens/login_screen.dart'; 
+import 'screens/login_screen.dart';
 
 void main() {
   runApp(OnlineGroceryApp());
 }
 
 class OnlineGroceryApp extends StatelessWidget {
+  // ValueNotifier to manage theme changes (light/dark)
   final ValueNotifier<ThemeMode> _themeNotifier = ValueNotifier(ThemeMode.light);
+
+  OnlineGroceryApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,16 +25,16 @@ class OnlineGroceryApp extends StatelessWidget {
               filled: true,
               fillColor: Colors.grey[200],
             ),
-          ),  
+          ),
           darkTheme: ThemeData(
             brightness: Brightness.dark,
             inputDecorationTheme: InputDecorationTheme(
               filled: true,
               fillColor: Colors.grey[700],
             ),
-          ), 
-          themeMode: currentMode,  
-          home: LoginScreen(themeNotifier: _themeNotifier), 
+          ),
+          themeMode: currentMode,
+          home: LoginScreen(themeNotifier: _themeNotifier),
         );
       },
     );

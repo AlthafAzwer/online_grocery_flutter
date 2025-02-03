@@ -30,6 +30,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  # HTTP Client for API requests
+  http: 1.2.2
+
+
+  # Secure storage for authentication tokens
+  flutter_secure_storage: ^9.0.0
      
 
 
